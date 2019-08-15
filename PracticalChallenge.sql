@@ -4,7 +4,7 @@
 -- TOUR (TourName, Description)
 -- Primary Key (TourName)
 
--- CLIENT (CLientID, Surname, GivenName, Gender)
+-- CLIENT (ClientID, Surname, GivenName, Gender)
 -- Primary Key (ClientID)
 
 -- EVENT (TourName, EventYear, EventMonth, EventDay, EventFee)
@@ -65,4 +65,22 @@ CREATE TABLE BOOKING (
     CHECK       (EventDay >= 1 AND EventDay <=31),
     CHECK       (EventYear BETWEEN 1000 AND 9999),
     CHECK       (Payment > 0)
-)
+);
+
+INSERT INTO TOUR (TourName, Description)
+VALUES  ('North', 'Tour of wineries and outlets of the Bendigo and Castlemaine region'),
+        ('South', 'Tour of wineries in the coolest region');
+
+INSERT INTO CLIENT (Surname, GivenName, Gender)
+VALUES  ('Price', 'Taylor', 'M'),
+        ('Spurgeon', 'Zali', 'F'),
+        ('Harrison', 'Coffee', 'I');
+
+INSERT INTO EVENT (TourName, EventMonth, EventDay, EventYear, EventFee)
+VALUES  ('North', 'Jan', 9, 2016, 200),
+        ('South', 'Sep', 18, 2019, 300);
+
+INSERT INTO BOOKING (ClientID, TourName, EventMonth, EventDay, EventYear, DateBooked, Payment)
+VALUES  (1, 'North', 'Jan', 9, 2016, '10 Dec 2015', 200),
+        (2, 'South', 'Sep', 18, 2019, '16 Aug 2019', 300),
+        (3, 'South', 'Sep', 18, 2019, '8 Aug 2019', 300);
