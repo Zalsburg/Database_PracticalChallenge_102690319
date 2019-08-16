@@ -106,3 +106,20 @@ SELECT *
 FROM BOOKING
 WHERE Payment > (SELECT AVG(Payment)
                 FROM BOOKING);
+
+
+--TASK 5
+--Received an error saying "Create View must be the only statement in the batch". A fix I found online was to use "GO" which signals the end of the batch
+GO
+
+CREATE VIEW CLIENTBOOKING AS
+SELECT C.GivenName, C.Surname, T.TourName, T.Description, E.EventYear, E.EventMonth, E.EventDay, E.EventFee, B.DateBooked, B.Payment
+FROM TOUR T
+INNER JOIN EVENT E
+ON T.TourName = E.TourName
+INNER JOIN BOOKING B
+ON E.TourName = B.TourName AND E.EventYear = B.EventYear AND E.EventMonth = B.EventMonth AND E.EventDay = B.EventDay
+INNER JOIN CLIENT C
+ON B.ClientID = C.ClientID;
+
+GO
