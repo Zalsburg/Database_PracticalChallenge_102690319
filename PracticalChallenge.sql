@@ -1,6 +1,7 @@
 --Zali Spurgeon
 --102690319
 
+--TASK 1
 -- TOUR (TourName, Description)
 -- Primary Key (TourName)
 
@@ -16,6 +17,7 @@
 -- Foreign Key (ClientID) references CLIENT
 -- Foreign Key (TourName, EventYear, EventMonth, EventDay) references EVENT
 
+--TASK 2
 DROP TABLE IF EXISTS BOOKING;
 DROP TABLE IF EXISTS EVENT;
 DROP TABLE IF EXISTS CLIENT;
@@ -67,6 +69,7 @@ CREATE TABLE BOOKING (
     CHECK       (Payment > 0)
 );
 
+--TASK 3
 INSERT INTO TOUR (TourName, Description)
 VALUES  ('North', 'Tour of wineries and outlets of the Bendigo and Castlemaine region'),
         ('South', 'Tour of wineries in the coolest region');
@@ -84,3 +87,22 @@ INSERT INTO BOOKING (ClientID, TourName, EventMonth, EventDay, EventYear, DateBo
 VALUES  (1, 'North', 'Jan', 9, 2016, '10 Dec 2015', 200),
         (2, 'South', 'Sep', 18, 2019, '16 Aug 2019', 300),
         (3, 'South', 'Sep', 18, 2019, '8 Aug 2019', 300);
+
+--TASK 4
+SELECT C.GivenName, C.Surname, T.TourName, T.Description, E.EventYear, E.EventMonth, E.EventDay, E.EventFee, B.DateBooked, B.Payment
+FROM TOUR T
+INNER JOIN EVENT E
+ON T.TourName = E.TourName
+INNER JOIN BOOKING B
+ON E.TourName = B.TourName AND E.EventYear = B.EventYear AND E.EventMonth = B.EventMonth AND E.EventDay = B.EventDay
+INNER JOIN CLIENT C
+ON B.ClientID = C.ClientID;
+
+SELECT EventMonth, TourName, Count(*) AS "Num Bookings"
+FROM BOOKING
+GROUP BY EventMonth, TourName;
+
+SELECT *
+FROM BOOKING
+WHERE Payment > (SELECT AVG(Payment)
+                FROM BOOKING);
